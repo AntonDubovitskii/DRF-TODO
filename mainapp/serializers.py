@@ -20,7 +20,7 @@ class WorkerModelSerializer(ModelSerializer):
         exclude = ['id']
 
 
-class ProjectModelSerializer(HyperlinkedModelSerializer):
+class ProjectModelSerializer(ModelSerializer):
     worker = WorkerModelSerializer(many=True)
 
     class Meta:
@@ -28,7 +28,7 @@ class ProjectModelSerializer(HyperlinkedModelSerializer):
         fields = '__all__'
 
 
-class TODOModelSerializer(HyperlinkedModelSerializer):
+class TODOModelSerializer(ModelSerializer):
     creator = WorkerModelSerializer()
 
     class Meta:

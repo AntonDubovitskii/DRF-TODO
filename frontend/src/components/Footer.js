@@ -14,7 +14,7 @@ const Footer = () => {
                         </ol>
 
                         <div className="copyright">
-                            <p className="text_content copyright_text">2022 © All rights reserved.</p>
+                            <p className="text_content copyright_text">2023 © All rights reserved.</p>
                         </div>
                     </div>
                    </div>

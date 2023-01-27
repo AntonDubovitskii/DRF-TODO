@@ -5,13 +5,13 @@ const AuthorItem = ({author}) => {
     return(
         <tr>
             <td>
-                {author.first_name}
+                {author.firstName}
             </td>
             <td>
-                {author.last_name}
+                {author.lastName}
             </td>
             <td>
-                {author.birthday_year}
+                {author.birthdayYear}
             </td>
         </tr>
     )
