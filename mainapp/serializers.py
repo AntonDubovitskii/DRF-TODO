@@ -17,7 +17,7 @@ class LibraryUserModelSerializer(ModelSerializer):
 class WorkerModelSerializer(ModelSerializer):
     class Meta:
         model = Worker
-        exclude = ['id']
+        fields = '__all__'
 
 
 class ProjectModelSerializer(ModelSerializer):
