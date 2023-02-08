@@ -5,13 +5,18 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from .models import Author, LibraryUser, Worker, TODO, Project
 from .serializers import AuthorModelSerializer, LibraryUserModelSerializer, WorkerModelSerializer, \
-    TODOModelSerializer, ProjectModelSerializer
+    TODOModelSerializer, ProjectModelSerializer, TODOModelSerializerBase, ProjectModelSerializerBase
 
 
 class ProjectPaginator(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'size'
     max_page_size = 100
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return ProjectModelSerializer
+        return ProjectModelSerializerBase
 
 
 class ToDoPaginator(PageNumberPagination):
@@ -55,6 +60,11 @@ class TODOModelViewSet(ModelViewSet):
         if proj_id:
             todo = todo.filter(project_id__contains=proj_id)
         return todo
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return TODOModelSerializer
+        return TODOModelSerializerBase
 
 
 class ProjectModelViewSet(ModelViewSet):
