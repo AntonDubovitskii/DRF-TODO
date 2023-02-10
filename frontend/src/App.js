@@ -1,8 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import AuthorList from './components/Author.js';
-import LibUsersList from './components/LibraryUser.js';
 import ProjectList from "./components/Project";
 import TaskList from "./components/Task";
 import WorkerList from "./components/Worker";
@@ -23,8 +21,6 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            'authors': [],
-            'lib_users': [],
             'workers': [],
             'projects': [],
             'tasks': [],
@@ -97,7 +93,7 @@ class App extends React.Component {
             this.setState({tasks: []})
         })
 
-        axios.get('http://127.0.0.1:8000/api/workers/', {headers})
+        axios.get('http://127.0.0.1:8000/api/users/', {headers})
             .then(response => {
             const workers = response.data
                 this.setState(
@@ -109,33 +105,6 @@ class App extends React.Component {
             console.log(error)
             this.setState({workers: []})
         })
-
-        axios.get('http://127.0.0.1:8000/api/authors/', {headers})
-            .then(response => {
-            const authors = response.data
-                this.setState(
-                    {
-                        'authors': authors.results
-                    }
-                )
-            }).catch(error => {
-            console.log(error)
-            this.setState({authors: []})
-        })
-
-        axios.get('http://127.0.0.1:8000/api/users/', {headers})
-            .then(response => {
-            const lib_users = response.data
-                this.setState(
-                    {
-                        'lib_users': lib_users.results
-                    }
-                )
-            }).catch(error => {
-            console.log(error)
-            this.setState({lib_users: []})
-        })
-
     }
     componentDidMount() {
         this.get_token_from_storage()
