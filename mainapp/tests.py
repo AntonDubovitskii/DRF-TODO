@@ -5,7 +5,7 @@ from rest_framework.test import APIRequestFactory, force_authenticate, APIClient
 from mixer.backend.django import mixer
 from django.contrib.auth.models import User
 from .views import TODOModelViewSet, WorkerModelViewSet, ProjectModelViewSet
-from .models import TODO, Worker, Project
+from .models import TODO, ServiceUser, Project
 
 
 class TestTODOModelViewSet(TestCase):
@@ -28,10 +28,10 @@ class TestTODOModelViewSet(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
-class TestWorkerModel(TestCase):
+class TestServiceUserModel(TestCase):
     # APIClient. Тест редактирования, использую права администратора.
     def test_edit(self):
-        worker = mixer.blend(Worker)
+        worker = mixer.blend(ServiceUser)
         client = APIClient()
         admin = User.objects.create_superuser('admin', 'admin@mail.ru', '123123Xz')
         client.login(username='admin', password='123123Xz')
@@ -51,7 +51,7 @@ class TestToDoAdd(APITestCase):
     # APITestCase. Тест добавления новой задачи.
     def test_add_todo_to_project(self):
         project = mixer.blend(Project)
-        worker = mixer.blend(Worker)
+        worker = mixer.blend(ServiceUser)
         todo = mixer.blend(TODO)
 
         admin = User.objects.create_superuser('admin', 'admin@mail.ru', '123123Xz')

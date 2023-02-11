@@ -3,20 +3,15 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
-from .models import Author, LibraryUser, Worker, TODO, Project
-from .serializers import AuthorModelSerializer, LibraryUserModelSerializer, WorkerModelSerializer, \
-    TODOModelSerializer, ProjectModelSerializer, TODOModelSerializerBase, ProjectModelSerializerBase
+from .models import ServiceUser, TODO, Project
+from .serializers import ServiceUserModelSerializer, TODOModelSerializer, ProjectModelSerializer, \
+    TODOModelSerializerBase, ServiceUserModelSerializerV2
 
 
 class ProjectPaginator(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'size'
     max_page_size = 100
-
-    def get_serializer_class(self):
-        if self.request.method in ['GET']:
-            return ProjectModelSerializer
-        return ProjectModelSerializerBase
 
 
 class ToDoPaginator(PageNumberPagination):
@@ -25,22 +20,14 @@ class ToDoPaginator(PageNumberPagination):
     max_page_size = 1000
 
 
-class AuthorModelViewSet(ModelViewSet):
-    queryset = Author.objects.all()
-    serializer_class = AuthorModelSerializer
+class ServiceUserModelViewSet(ModelViewSet):
+    queryset = ServiceUser.objects.all()
+    serializer_class = ServiceUserModelSerializer
 
-
-class LibraryUserModelViewSet(mixins.RetrieveModelMixin,
-                              mixins.UpdateModelMixin,
-                              mixins.ListModelMixin,
-                              viewsets.GenericViewSet):
-    queryset = LibraryUser.objects.all()
-    serializer_class = LibraryUserModelSerializer
-
-
-class WorkerModelViewSet(ModelViewSet):
-    queryset = Worker.objects.all()
-    serializer_class = WorkerModelSerializer
+    def get_serializer_class(self):
+        if self.request.version == '1.1':
+            return ServiceUserModelSerializerV2
+        return ServiceUserModelSerializer
 
 
 class TODOModelViewSet(ModelViewSet):

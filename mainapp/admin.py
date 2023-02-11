@@ -1,8 +1,6 @@
 from django.contrib import admin
-from .models import Author, LibraryUser, TODO, Worker, Project
+from .models import TODO, ServiceUser, Project
 
-admin.site.register(Author)
-admin.site.register(LibraryUser)
 admin.site.register(TODO)
 admin.site.register(Project)
-admin.site.register(Worker)
+admin.site.register(ServiceUser)

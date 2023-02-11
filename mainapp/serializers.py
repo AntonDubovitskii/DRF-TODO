@@ -1,41 +1,29 @@
 from rest_framework.serializers import ModelSerializer, HyperlinkedModelSerializer
-from .models import Author, LibraryUser, Worker, Project, TODO
+from .models import ServiceUser, Project, TODO
 
 
-class AuthorModelSerializer(ModelSerializer):
+class ServiceUserModelSerializer(ModelSerializer):
     class Meta:
-        model = Author
-        fields = '__all__'
+        model = ServiceUser
+        fields = ('id', 'first_name', 'last_name', 'age', 'email')
 
 
-class LibraryUserModelSerializer(ModelSerializer):
+class ServiceUserModelSerializerV2(ModelSerializer):
     class Meta:
-        model = LibraryUser
-        fields = '__all__'
-
-
-class WorkerModelSerializer(ModelSerializer):
-    class Meta:
-        model = Worker
+        model = ServiceUser
         fields = '__all__'
 
 
 class ProjectModelSerializer(ModelSerializer):
-    worker = WorkerModelSerializer(many=True)
+    employee = ServiceUserModelSerializer(many=True)
 
     class Meta:
         model = Project
         fields = '__all__'
 
 
-class ProjectModelSerializerBase(ModelSerializer):
-    class Meta:
-        model = TODO
-        fields = '__all__'
-
-
 class TODOModelSerializer(ModelSerializer):
-    creator = WorkerModelSerializer()
+    creator = ServiceUserModelSerializer()
 
     class Meta:
         model = TODO
