@@ -22,6 +22,7 @@ from mainapp.views import ServiceUserModelViewSet, TODOModelViewSet, ProjectMode
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from graphene_django.views import GraphQLView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -47,6 +48,7 @@ urlpatterns = [
     path('api-jwt-token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api-jwt-token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/', include(router.urls)),
+    path('graphql/', GraphQLView.as_view(graphiql=True)),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$',
 
     schema_view.without_ui(cache_timeout=0), name='schema-json'),
