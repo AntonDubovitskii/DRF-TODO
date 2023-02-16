@@ -2,10 +2,19 @@ from rest_framework.serializers import ModelSerializer, HyperlinkedModelSerializ
 from .models import ServiceUser, Project, TODO
 
 
+class ProjectModelSerializer(ModelSerializer):
+
+    class Meta:
+        model = Project
+        fields = '__all__'
+
+
 class ServiceUserModelSerializer(ModelSerializer):
+    project = ProjectModelSerializer()
+
     class Meta:
         model = ServiceUser
-        fields = ('id', 'first_name', 'last_name', 'age', 'email')
+        fields = ('id', 'first_name', 'last_name', 'age', 'email', 'project')
 
 
 class ServiceUserModelSerializerV2(ModelSerializer):
@@ -14,16 +23,9 @@ class ServiceUserModelSerializerV2(ModelSerializer):
         fields = '__all__'
 
 
-class ProjectModelSerializer(ModelSerializer):
-    employee = ServiceUserModelSerializer(many=True)
-
-    class Meta:
-        model = Project
-        fields = '__all__'
-
-
 class TODOModelSerializer(ModelSerializer):
     creator = ServiceUserModelSerializer()
+    project = ProjectModelSerializer()
 
     class Meta:
         model = TODO
